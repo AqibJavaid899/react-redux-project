@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react'
-import axios from 'axios'
-import {getSelectedProduct, removeSelectedProduct} from '../redux/actions/productActions'
+import {fetchProduct, removeSelectedProduct} from '../redux/actions/productActions'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from 'react-router-dom'
 
@@ -14,20 +13,14 @@ const SelectedProduct = () => {
     const product = useSelector((state) => state.selectedProduct)
     const {id, title, price, description, category, image} = product
 
-    // Fetching the Selected Product from the API
-    const getSelectedProductFromAPI = async () => {
-        const product = await axios.get(`https://fakestoreapi.com/products/${productId}`).catch((error) => console.log("Error is : ",error))
-        dispatch(getSelectedProduct(product.data))
-    }
-
     // This useEffect will run every time whenever "productId" will changes in the future
     useEffect(() => {
-        if (productId && productId !== "") { getSelectedProductFromAPI() }
+        if (productId && productId !== "") {dispatch(fetchProduct(productId)) }
         // Writing a cleanup function to unmount the selected product when the component umnount
         return () => {
             dispatch(removeSelectedProduct())
         }
-    }, [productId])
+    }, [productId,dispatch])
 
 
 

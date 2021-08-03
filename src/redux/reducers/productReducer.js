@@ -10,7 +10,7 @@ const initState = {
 // Extending State with all the Products fetched from the API 
 export const productsReducer = (state = initState, action) => {
     switch (action.type) {
-        case actionTypes.SET_ALL_PRODUCTS:
+        case actionTypes.FETCH_PRODUCTS:
             return {...state, products: action.payload}
         default:
             return state
@@ -20,7 +20,7 @@ export const productsReducer = (state = initState, action) => {
 // Extending State with the Single Product passed as a Payload
 export const singleProductReducer = (state={}, action) => {
     switch (action.type) {
-        case actionTypes.GET_SELECTED_PRODUCT:
+        case actionTypes.FETCH_PRODUCT:
             return {...state, ...action.payload}
         case actionTypes.REMOVE_SELECTED_PRODUCT:
             return {}

@@ -1,20 +1,20 @@
 import {actionTypes} from '../constants/actionTypes'
+import apiRequest from '../apiRequest/apiRequest'
 
-// Passing all the Products as a Payload to the productsReducer
-export const setAllProducts = (allProducts) => {
-    return {
-        type: actionTypes.SET_ALL_PRODUCTS,
-        payload: allProducts
-    }
+// Defining the Asynchronous Action Creator to work with Redux Thunk
+export const fetchProducts = () => async (dispatch) => {
+        // Fetching the data from the API
+        const response = await apiRequest.get('/products')
+        dispatch({type: actionTypes.FETCH_PRODUCTS, payload: response.data})
 }
 
-// Passing Single Selected Product as a Payload to singleProductReducer
-export const getSelectedProduct = (product) => {
-    return {
-        type: actionTypes.GET_SELECTED_PRODUCT,
-        payload: product
-    }
+// Defining the Asynchronous Action Creator to work with Redux Thunk
+export const fetchProduct = (id) => async (dispatch) => {
+    // Fetching the data from the API
+    const response = await apiRequest.get(`/products/${id}`)
+    dispatch({type: actionTypes.FETCH_PRODUCT, payload: response.data})
 }
+
 
 // This action will destroy the previous selected item 
 export const removeSelectedProduct = () => {
